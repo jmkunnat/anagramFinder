@@ -2,15 +2,35 @@
 // length of possible words - for game WordLink
 
 import java.io.Console;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.HashSet;
+
 
 public class AnagramFinder {
-	public static void main(String[] args) {
-		// have letters and numbers in command line args
+	public static void main(String[] args) throws FileNotFoundException {
+		// dictionary from https://github.com/dwyl/english-words
+		Set<String> dictionary = getDictionary();
 		String[] letters = getLetters();
 		int[] lengths = getLengths();
-		System.out.println(Arrays.toString(letters));
-		System.out.println(Arrays.toString(lengths));
+
+	}
+
+	public static Set<String> getDictionary()  {
+		Set<String> dictionary = new HashSet<String>();
+		try {
+			Scanner scanner = new Scanner(new File("words_alpha.txt"));
+			while(scanner.hasNext()) {
+				dictionary.add(scanner.nextLine().toLowerCase());
+			}
+		} catch(FileNotFoundException ex) {
+			System.out.println("wasn't able to read in dictionary");
+		}
+
+		return dictionary;
 	}
 
 	public static String[] getLetters() {
